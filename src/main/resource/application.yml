@@ -1,0 +1,100 @@
+#################################
+# myRummi PRODUCT Service #
+#################################
+# Server config
+server:
+  port: 8088
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  datasource:
+    url: jdbc:mariadb://db-dev.csfsspfi9t4q.ap-northeast-2.rds.amazonaws.com:3306/dev?characterEncoding=utf8
+    username: admin
+    password: 1q2w3e4r
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 60000
+      maxLifetime: 177000
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+        default_schema: dev
+  data:
+    web:
+      pageable:
+        default-page-size: 100
+  mvc:
+    throw-exception-if-no-handler-found: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # multipart 파일 업로드 시 용량 제한
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 10MB
+      max-file-size: 10MB
+  redis:
+    host: ec2-43-201-134-232.ap-northeast-2.compute.amazonaws.com
+    port: 6379
+    password: 2023wepin#
+
+jwt:
+  header: Authorization
+  #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+  secret-key: w2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+
+oauth:
+  kakao:
+    client-id: d6eba0edf8192b07c67f2e210c498f18
+    url:
+      auth: https://kauth.kakao.com
+      api: https://kapi.kakao.com
+    redirect-url: https://dev.wepin.store/login
+
+web-url: https://dev.ellie-world.store
+swagger-key: eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6IjExNTg4YjdkLWMwYjgtNGZkNC04ZDQ2LWI0NzViNTc3ZjMxNyJ9.E2VegliOOR7rrxxaj_x1O8le-0YSM83hIUQQrko3rFJw-rgeF8V4cqSesvJLns0akGWJCKo2nBA1mVIRa4a27w
+
+# aws S3 info
+cloud:
+  aws:
+    credentials:
+      access-key: AKIA2D3V5RUJG3OHHCO6
+      secret-key: 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
+    s3:
+      bucket: wepin-pic-develop
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+# mybatis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: java.lang
+  mapper-locations: classpath:mapper/*.xml
+
+# Logging #
+#logging:
+#  level:
+#    root: INFO
+#    "[wepin.store]": DEBUG
+#    com:
+#      amazonaws:
+#        util:
+#          EC2MetadataUtils: error
